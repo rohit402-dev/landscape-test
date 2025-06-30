@@ -10,11 +10,11 @@ collection = db["landscape_data"]
 st.set_page_config(layout="wide")
 st.title("Landscape Testing Data Visualizer")
 
-# Manual version options
-version_map = {
-    # "Overall(First run)": 1,
-    "Life style shot - Driveway, Walkway": 3,  # Add more as needed
-}
+# Fetch version mappings from MongoDB
+version_docs = db["version_detail"].find({"is_active": True})
+
+# Build dropdown options
+version_map = {doc["display_name"]: doc["version"] for doc in version_docs}
 
 col1, col2 = st.columns([1, 4])
 with col1:
